@@ -1,13 +1,21 @@
 <?php
-/**
- * Fchier principal php
- *
- * @package UpSoon
- */
+/*
+Plugin Name: UpSoon
+Plugin URI: https://example.com
+Description: a lightweight WordPress plugin that lets you display a customizable banner at the top or bottom of your site
+Version: 1.0
+Author: Tetsuya
+Author URI: ""
+License: GPLv3
+Text Domain: upsoon
+Domain Path: /languages
+*/
+
 //sécu
 if(!defined('ABSPATH')) {
     exit;
 }
+
 //const
 const UP_SOON_VERSION = '1.0';
 define('UP_SOON_PLUGIN_DIR',plugin_dir_path(__FILE__));
