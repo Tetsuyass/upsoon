@@ -41,6 +41,9 @@ class Core {
         if(is_admin()) {
             $admin = new \UpSoon\Admin\Admin();
             $admin->init();
+            //init la bannière :
+            $pub = new Pub();
+            $pub->init();
         }
     }
 

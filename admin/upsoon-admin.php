@@ -54,11 +54,14 @@ class Admin
         register_setting('upsoon_advanced', 'upsoon_banner_border_radius', array('sanitize_callback' => array($this, 'sanitize_banner_radius')));
         register_setting('upsoon_advanced', 'upsoon_banner_font_size', array('sanitize_callback' => array($this, 'sanitize_banner_font_size')));
         register_setting('upsoon_advanced', 'upsoon_banner_z_index', array('sanitize_callback' => array($this, 'sanitize_banner_z_index')));
+        register_setting('upsoon_perso', 'upsoon_banner_text', array('sanitize_callback' => array($this, 'sanitize_banner_text')));
 
         add_settings_section('upsoon_section_base', __('Base Settings', 'upsoon'), array($this, 'render_section_base'), 'upsoon_settings');
-        add_settings_section('upsoon_section_advanced', __('Advanced Settings', 'upsoon'), array($this, 'render_section_advanced'), 'upsoon_settings');
+        add_settings_section('upsoon_section_base', __('Customization Settings', 'upsoon'), array($this, 'render_section_base'), 'upsoon_perso');
+        add_settings_section('upsoon_section_advanced', __('Advanced Settings', 'upsoon'), array($this, 'render_section_advanced'), 'upsoon_advanced');
 
         add_settings_field('upsoon_banner_enabled', __('Enable Banner', 'upsoon'), array($this, 'render_banner_enabled_field'), 'upsoon_settings', 'upsoon_section_base');
+        add_settings_field('upsoon_banner_text', __('Banner Text', 'upsoon'), array($this, 'render_banner_text_field'), 'upsoon_perso', 'upsoon_section_base');
         add_settings_field('upsoon_banner_text', __('Banner Text', 'upsoon'), array($this, 'render_banner_text_field'), 'upsoon_settings', 'upsoon_section_base');
         add_settings_field('upsoon_banner_pos', __('Banner Position', 'upsoon'), array($this, 'render_banner_pos_field'), 'upsoon_perso', 'upsoon_section_base');
         add_settings_field('upsoon_banner_color', __('Banner Color', 'upsoon'), array($this, 'render_banner_color_field'), 'upsoon_perso', 'upsoon_section_base');
@@ -184,13 +187,75 @@ class Admin
 
         if (isset($_POST['upsoon_banner_custom_css'])) {
             $css = wp_strip_all_tags(stripslashes($_POST['upsoon_banner_custom_css']));
-            $file = UP_SOON_PLUGIN_DIR . 'public/assets/css/upsoon-banner-custom.css';
-            try {
-                file_put_contents($file, $css);
-            } catch (Exception $e) {
-                error_log('[UpSoon] Failed to write custom CSS: ' . $e->getMessage());
+
+            list($is_valid, $error_message) = $this->validate_custom_css($css);
+            if ($is_valid) {
+                $file = UP_SOON_PLUGIN_DIR . 'public/assets/css/upsoon-banner-custom.css';
+                try {
+                    file_put_contents($file, $css);
+                    add_settings_error(
+                        'upsoon_settings',
+                        'css_saved',
+                        __('Custom CSS saved successfully.', 'upsoon'),
+                        'updated'
+                    );
+                } catch (Exception $e) {
+                    error_log('[UpSoon] Failed to write custom CSS: ' . $e->getMessage());
+                    add_settings_error(
+                        'upsoon_settings',
+                        'css_write_failed',
+                        __('Failed to write custom CSS to file.', 'upsoon'),
+                        'error'
+                    );
+                }
+            } else {
+                add_settings_error(
+                    'upsoon_settings',
+                    'invalid_css',
+                    __('Custom CSS contains syntax errors and was not saved.', 'upsoon'),
+                    'error'
+                );
+
+                add_settings_error(
+                    'upsoon_settings',
+                    'invalid_css',
+                    $error_message,
+                    'error'
+                );
             }
         }
+    }
+
+
+    private function validate_custom_css($css) {
+        // Vérifie l'équilibre des accolades
+        $open = substr_count($css, '{');
+        $close = substr_count($css, '}');
+        if ($open !== $close) {
+            return [false, __('Unbalanced curly braces: check for missing { or }', 'upsoon')];
+        }
+
+        // Vérifie qu'il y a au moins une règle CSS
+        if (!preg_match('/[a-zA-Z0-9\s\.\#\:\-\_\>\[\]=\*]+{[^}]+}/', $css)) {
+            return [false, __('No valid CSS rules found (e.g. selector { property: value; })', 'upsoon')];
+        }
+
+        // Vérifie chaque ligne
+        $lines = explode("\n", $css);
+        foreach ($lines as $i => $line) {
+            $line = trim($line);
+            if (empty($line) || str_starts_with($line, '/*') || str_starts_with($line, '*')) continue;
+
+            if (strpos($line, ':') !== false && !preg_match('/;[\s]*$/', $line)) {
+                return [false, sprintf(__('Missing semicolon on line %d: "%s"', 'upsoon'), $i + 1, $line)];
+            }
+
+            if (strpos($line, ':') !== false && preg_match('/:[\s]*$/', $line)) {
+                return [false, sprintf(__('Missing value after colon on line %d: "%s"', 'upsoon'), $i + 1, $line)];
+            }
+        }
+
+        return [true, null];
     }
 
     public function render_settings_page() {

@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const bannerTextInput = document.querySelector('input[name="upsoon_banner_text"]');
     const preview = document.getElementById('upsoon-banner-preview');
     const container = document.getElementById('upsoon-preview-container');
-
+    if (bannerTextInput && preview) {
+        bannerTextInput.addEventListener('input', function () {
+            preview.textContent = bannerTextInput.value;
+        });
+    }
     function updatePreview() {
         const pos = document.querySelector('input[name="upsoon_banner_pos"]:checked')?.value;
         const bgColor = document.querySelector('input[name="upsoon_banner_color"]')?.value;

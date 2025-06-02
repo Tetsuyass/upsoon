@@ -1,0 +1,75 @@
+/* upsoon-banner.css */
+.upsoon-banner {
+    position: fixed;
+    padding: 10px 20px;
+    font-family: sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    max-width: 90%;
+    word-wrap: break-word;
+    transition: all 0.3s ease;
+}
+
+
+#upsoon-banner a {
+    color: #ffd700;
+    text-decoration: underline;
+}
+
+#upsoon-banner a:hover,
+#upsoon-banner a:focus {
+    color: #fffbe6;
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #upsoon-banner {
+        font-size: 0.9rem;
+        padding: 0.75em 1em;
+    }
+}
+
+/* Positions dynamiques */
+#upsoon-banner[data-position="top"] {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#upsoon-banner[data-position="bottom"] {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#upsoon-banner[data-position="top-left"] {
+    top: 20px;
+    left: 20px;
+}
+
+#upsoon-banner[data-position="top-right"] {
+    top: 20px;
+    right: 20px;
+}
+
+#upsoon-banner[data-position="bottom-left"] {
+    bottom: 20px;
+    left: 20px;
+}
+
+#upsoon-banner[data-position="bottom-right"] {
+    bottom: 20px;
+    right: 20px;
+}
+
+#upsoon-banner[data-position="left"] {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+}
+
+#upsoon-banner[data-position="right"] {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
