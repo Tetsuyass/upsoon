@@ -111,7 +111,7 @@ spl_autoload_register(function ($class) {
  */
 
 function upsoon_init() {
-    $upsoon = new \Up-Soon\Includes\Core();
+    $upsoon = new \UpSoon\Includes\Core();
     $upsoon->init();
 }
 
