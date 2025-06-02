@@ -126,7 +126,7 @@ function upsoon_activate() {
     add_option('upsoon_banner_text','Test'); //texte affiché sur la bannière
     add_option('upsoon_banner_pos','Bottom Right'); //position de la bannière sur le site
     add_option('upsoon_banner_color','#00008B'); //couleur de la bannière
-    add_option('upsoon_banner_text_color','white'); //couleur du texte de la bannière
+    add_option('upsoon_banner_text_color','#FFFFFF'); //couleur du texte de la bannière
     //technique
     add_option('upsoon_banner_border_radius','16px'); //l'arrondissement des coins
     add_option('upsoon_banner_font_size','16px'); //taille du texte
