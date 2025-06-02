@@ -10,12 +10,12 @@ if(!defined('ABSPATH')) {
 }
 
 //supprimer toutes les options
-delete_option('upsoon_banner_enabled', true);
-delete_option('upsoon_banner_text','Test');
-delete_option('upsoon_banner_pos','bottom-right');
-delete_option('upsoon_banner_color','blue');
-delete_option('upsoon_banner_text_color','white');
-delete_option('upsoon_banner_border_radius','16px');
-delete_option('upsoon_banner_font_size','16px');
-delete_option('upsoon_banner_z_index','9999');
-delete_option('upsoon_banner_custom_css','');
+delete_option('upsoon_banner_enabled');
+delete_option('upsoon_banner_text');
+delete_option('upsoon_banner_pos');
+delete_option('upsoon_banner_color');
+delete_option('upsoon_banner_text_color');
+delete_option('upsoon_banner_border_radius');
+delete_option('upsoon_banner_font_size');
+delete_option('upsoon_banner_z_index');
+delete_option('upsoon_banner_custom_css');

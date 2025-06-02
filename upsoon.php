@@ -122,16 +122,16 @@ register_activation_hook(__FILE__,'upsoon_activate');
 
 function upsoon_activate() {
     //déclaration des options utiles au plugin
-    add_option('upsoon_banner_enabled', true); //activer, désactiver la bannière
+    add_option('upsoon_banner_enabled', 'Deactivated'); //activer, désactiver la bannière
     add_option('upsoon_banner_text','Test'); //texte affiché sur la bannière
-    add_option('upsoon_banner_pos','bottom-right'); //position de la bannière sur le site
-    add_option('upsoon_banner_color','blue'); //couleur de la bannière
+    add_option('upsoon_banner_pos','Bottom Right'); //position de la bannière sur le site
+    add_option('upsoon_banner_color','#00008B'); //couleur de la bannière
     add_option('upsoon_banner_text_color','white'); //couleur du texte de la bannière
     //technique
     add_option('upsoon_banner_border_radius','16px'); //l'arrondissement des coins
     add_option('upsoon_banner_font_size','16px'); //taille du texte
     add_option('upsoon_banner_z_index','9999'); //s'affiche au dessus des autres objets
-    add_option('upsoon_banner_custom_css',''); //pour les dev qui veulent ajouter du css en plus
+    add_option('upsoon_banner_custom_css', ''); //pour les dev qui veulent ajouter du css en plus
 }
 
 //pas besoin de hook de désinsta on utilise uninstall.php

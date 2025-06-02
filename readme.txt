@@ -1,4 +1,4 @@
-=== Site Status Banner ===
+=== UpSoon ===
 Contributors: Tetsuya
 Donate link: https://buymeacoffee.com/tetsuya
 Tags: banner, maintenance, admin notice, status, alert
