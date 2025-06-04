@@ -10,7 +10,12 @@ class Pub
 {
     public function init()
     {
-        add_action('wp_footer', [$this, 'display_banner']);
+        if (function_exists('wp_body_open')) {
+            add_action('wp_body_open', [$this, 'display_banner']);
+        } else {
+            // Alternative pour versions WordPress plus anciennes (par exemple wp_head())
+            add_action('wp_head', [$this, 'display_banner']);
+        }
         add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
     }
 
